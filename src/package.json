@@ -1,0 +1,27 @@
+{
+  "name": "web-app-crud-db",
+  "version": "1.0.0",
+  "description": "A web application with CRUD functions connected to a database on MongoDB. The server with CRUD functions receives data from a small frontend app that simulates an employee registry system.",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "mongoose": "^6.9.0",
+    "validator": "^13.7.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Davidls10/web-app-crud-db.git"
+  },
+  "author": "David Lima <davidls.programmer@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Davidls10/web-app-crud-db/issues"
+  },
+  "homepage": "https://github.com/Davidls10/web-app-crud-db#readme"
+}

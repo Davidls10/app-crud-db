@@ -4,11 +4,11 @@ const employeesList = document.querySelector('#employees-list')
 form.addEventListener('submit', function(e) {
     e.preventDefault()
 
-    const name = document.querySelector('input[name="name"]').value
-    const job = document.querySelector('input[name="job"]').value
-    const salary = document.querySelector('input[name="salary"]').value
+    let name = document.querySelector('input[name="name"]').value
+    let job = document.querySelector('input[name="job"]').value
+    let salary = document.querySelector('input[name="salary"]').value
 
-    fetch('http://localhost:3000/employees', {
+    const addEmployee = fetch('http://localhost:3000/employees', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -32,15 +32,53 @@ form.addEventListener('submit', function(e) {
             
             const editButton = document.createElement('button')
             editButton.innerHTML = 'Editar'
-            editButton.addEventListener('click', () => {
-                fetch(`http://localhost:3000/employees/${employee._id}`, {
-                    method: 'PUT'
-                })
-                .then(() => {
+            editButton.addEventListener('click', function() {
+                // cria um elemento input que irá receber 
+                // a string anterior e permitir alteração pelo usuário
+                const editModal = document.querySelector('#editModal')
+                editModal.style.display = 'flex'
 
-                })
-                .catch(error => {
-                    console.error(error)
+                const editedName = document.querySelector('input[name="editName"]')
+                editedName.value = name
+                const editedJob = document.querySelector('input[name="editJob"]')
+                editedJob.value = job
+                const editedSalary = document.querySelector('input[name="editSalary"]')
+                editedSalary.value = salary
+
+                const confirmButton = document.querySelector('#confirmButton')
+        
+                // cria um listener para caso o usuário aperte o botão 'enter', 
+                // impedindo-o de enviar uma string vazia
+                confirmButton.addEventListener('click', () => {
+                    if (editedName.value === '' || editedJob.value === '' || editedSalary.value === '') {
+                        alert('Não deixe campos vazios!')
+                        return
+                    }
+
+                    name = editedName.value
+                    job = editedJob.value
+                    salary = editedSalary.value
+
+                    fetch(`http://localhost:3000/employees/${employee._id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            name: name,
+                            job: job,
+                            salary: salary
+                        })
+                    })
+                    .then(() => {
+                        editModal.style.display = 'none'
+                        li.innerHTML = `<p>Nome: ${name}</p><p>Cargo: ${job}</p><p>Salário: R$${salary}</p>`
+                        li.appendChild(editButton)
+                        li.appendChild(deleteButton)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
                 })
             })
         
